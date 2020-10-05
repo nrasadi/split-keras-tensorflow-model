@@ -31,8 +31,10 @@ def split_network(model, split_layer_name: str, on_head=True, names=('head', 'ta
   else:
 
     # Clone model by saving and reloading it
-    model.save("temp_model", save_format='tf')
-    model2split = keras.models.load_model("temp_model",custom_objects=custom_objects)  
+    # model.save("temp_model", save_format='tf')
+    # model2split = keras.models.load_model("temp_model",custom_objects=custom_objects)  
+    # TODO: the model cloning does not work correctly. It seems weights no not load.
+    model2split = model
     
   
   # Determine the split point based on the 'on_head' argument.
