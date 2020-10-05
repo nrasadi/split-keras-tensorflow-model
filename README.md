@@ -120,7 +120,7 @@ plt.show()
 <h3> Quantize the model </h3>
 
 *   At first, I reduced the precision of weights and activations used in neural network to make the training process <b>faster</b>. 
-*   It may introduce accuracy instability on real models however. Therefore it's better to use float32 or [tensorflow mixed precision policy](https://www.tensorflow.org/guide/keras/mixed_precision) instead!
+*   It may introduce accuracy instability on real models, however. Therefore, it's better to use float32 or [tensorflow mixed precision policy](https://www.tensorflow.org/guide/keras/mixed_precision) instead!
 
 <h3> Apply augmentation </h3>
  
