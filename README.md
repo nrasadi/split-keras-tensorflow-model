@@ -366,13 +366,6 @@ model.fit(x_train, y_train, batch_size=batch_size, epochs=epochs, validation_spl
     211/211 [==============================] - 3s 16ms/step - loss: 0.0770 - accuracy: 0.9912 - val_loss: 0.0471 - val_accuracy: 0.9868
 
 
-
-
-
-    <tensorflow.python.keras.callbacks.History at 0x7f484139fd68>
-
-
-
 <h2> Model Evaluation </h2>
 
 Evaluate the model on the test set to see how good the network has been trained.
@@ -423,7 +416,6 @@ head, tail = splitter.split_network(model=model,
                                     custom_objects=custom_layers)
 ```
 
-    {'relu6_3': <tensorflow.python.keras.layers.core.Activation object at 0x7f484557a588>, 'relu6_4': <tensorflow.python.keras.layers.core.Activation object at 0x7f484022be80>, 'relu6_5': <tensorflow.python.keras.layers.core.Activation object at 0x7f4842a26cf8>, 'relu6_6': <tensorflow.python.keras.layers.core.Activation object at 0x7f48415fdc88>, 'relu6_7': <tensorflow.python.keras.layers.core.Activation object at 0x7f48425ef128>}
 
 
 <h3> Let's see how these head and tail models are </h3>
@@ -529,7 +521,7 @@ _ = head.summary(line_length=100), tail.summary(line_length=100)
     ____________________________________________________________________________________________________
 
 
-<h2> Do Inference by both models </h2>
+<h2> Do Inference Using Two Models Jointly</h2>
 
 
 
