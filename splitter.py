@@ -3,6 +3,7 @@
 
 from tensorflow import keras
 from tensorflow.keras import layers as KL
+from tensorflow.keras import Model
 
 def split_network(model, split_layer_name: str, on_head=True, names=('head', 'tail'), custom_objects: dict=None) -> (Model, Model):
   """
