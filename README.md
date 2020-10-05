@@ -115,12 +115,12 @@ plt.show()
 ![png](split_model_example_files/split_model_example_9_0.png)
 
 
-<h2> Design Digit Recognizer Model Architecture </h2>
+<h2> Design Model Architecture of Digit Recognizer </h2>
 
 <h3> Quantize the model </h3>
 
 *   At first, I reduced the precision of weights and activations used in neural network to make the training process <b>faster</b>. 
-*   It may introduce accuracy instability on real models, however. Therefore, it's better to use float32 or [tensorflow mixed precision policy](https://www.tensorflow.org/guide/keras/mixed_precision) instead!
+*   It may introduce accuracy instability on real models, however. Therefore, it is better to use float32 or [tensorflow mixed precision policy](https://www.tensorflow.org/guide/keras/mixed_precision) instead!
 
 <h3> Apply augmentation </h3>
  
@@ -143,9 +143,9 @@ It consists of 4 blocks:
 3. ResBlock: Conv(32)-Conv(32)
 4. Conv(64)-Dense(128)-Dense(10)
 
-* I applied *ReLU6* activation on residual blocks and *ReLU* on others
+* I applied *ReLU6* activation on residual blocks and *ReLU* on the others
 * 20% dropout is applied on all conv blocks after batch normalization.
-* 50% dropout is applied just before last dense layer (output).
+* 50% dropout is applied just before the last dense layer (output).
 
 <h3> Model construction </h3>
 
@@ -538,7 +538,7 @@ plt.imshow(x_test[0].reshape(28,28).astype(np.float), cmap='gray');plt.axis("off
 
 <h3> Firstly, feed image to the <b>head</b> model. Then feed the output prediction of the head into the <b>tail</b> model.
 
-<h3> At last, Let's see whether the final prediction is correct?! </h3>
+<h3> At last, Let's see whether the final prediction is correct!? </h3>
 
 
 ```
