@@ -88,7 +88,7 @@ def split_network(model, split_layer_name: str, on_head=True, names=('head', 'ta
   tail_output = _find_backwards(model2split.layers[-1])
 
   # Creating head and tail models
-  head_model = Model(model2split.input, model2split.get_layer("split").output, name=names[0])
+  head_model = Model(model2split.input, model2split.get_layer(split_layer_name).output, name=names[0])
   tail_model = Model(tail_input, tail_output, name=names[1])
   
 
