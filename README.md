@@ -10,12 +10,14 @@ First of all, Clone!
 !git clone https://github.com/nrasadi/split-keras-tensorflow-model
 ```
 
+<div>
     Cloning into 'split-keras-tensorflow-model'...
     remote: Enumerating objects: 13, done.
     remote: Counting objects: 100% (13/13), done.
     remote: Compressing objects: 100% (13/13), done.
     remote: Total 13 (delta 5), reused 0 (delta 0), pack-reused 0
-    Unpacking objects: 100% (13/13), done.
+    Unpacking objects: 100% (13/13), done.    
+</div>
 
 
 
