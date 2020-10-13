@@ -6,7 +6,7 @@ To run this example, [Google Colab](https://colab.research.google.com) is a reco
 First of all, Clone!
 
 
-```
+```bash
 !git clone https://github.com/nrasadi/split-keras-tensorflow-model
 ```
 
@@ -19,7 +19,7 @@ First of all, Clone!
 
 
 
-```
+```python
 # Check if Colab is using gpu. 
 # If not, Runtime tab -> Change runtime type -> Hardware Accelarator (GPU)
 gpu_name = !nvidia-smi -L
@@ -30,7 +30,7 @@ print("GPU name: ", gpu_name[0]) if if len(gpu_name) >= 1 else print("No GPU!")
 
 
 
-```
+```python
 from pathlib import Path
 import os
 
@@ -48,7 +48,7 @@ from keras.utils import plot_model
 ```
 
 
-```
+```python
 os.chdir("/content/split-keras-tensorflow-model")
 import splitter
 ```
@@ -62,7 +62,7 @@ It contains:
 
 
 
-```
+```python
 # Model / data parameters
 num_classes = 10
 input_shape = (28, 28, 1)
