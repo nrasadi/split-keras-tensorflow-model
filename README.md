@@ -97,7 +97,7 @@ y_test = keras.utils.to_categorical(y_test, num_classes)
 
 
 
-```
+```python
 # Visualize dataset
 plt.figure(figsize=(20,10))
 sample_idx = np.random.randint(len(y_test), size=6)
@@ -152,7 +152,7 @@ It consists of 4 blocks:
 I used *RMSProp* as the optimzer and *categorical cross entropy* as the loss function.
 
 
-```
+```python
 # Quantize the network (Reduce precision of weights and activations to float16) 
 K.set_floatx('float16')
 
@@ -314,11 +314,11 @@ model.compile(loss="categorical_crossentropy", optimizer="RMSProp", metrics=["ac
 <h2> Plot Graphical Visualization of the Network Architecture </h2>
 
 
-```
+```python
 plot_model(model, rankdir='LR', dpi=600)
 ```
 
-    dot: graph is too large for cairo-renderer bitmaps. Scaling by 0.647032 to fit
+    The figure is too large. Open it on a new tab.
     
 
 
@@ -334,7 +334,7 @@ plot_model(model, rankdir='LR', dpi=600)
 * Change batch size and number of epochs to fit best with the resources you have.
 
 
-```
+```python
 # Train the model
 batch_size = 256
 epochs = 200
@@ -376,7 +376,7 @@ Evaluate the model on the test set to see how good the network has been trained.
 
 
 
-```
+```python
 score = model.evaluate(x_test, y_test, verbose=1)
 print("Test loss: {:.4f}".format(score[0]))
 print("Test accuracy: {:.2f}%".format(score[1]*100))
@@ -397,7 +397,7 @@ In the *Model architecture design* section, I named a specific layer (the second
 * The split point itself belongs to the head model. You can move it to the tail model by turning the *on_head* argument into False.
 
 
-```
+```python
 # Find custom layers that are not pure Keras layers/objects, but brought directly by Tensorflow backend.
 custom_layers = {}
 for l in model.layers:
@@ -421,7 +421,7 @@ head, tail = splitter.split_network(model=model,
 <h3> Let's see how these head and tail models are </h3>
 
 
-```
+```python
 _ = head.summary(line_length=100), tail.summary(line_length=100)
 ```
 
@@ -528,7 +528,7 @@ _ = head.summary(line_length=100), tail.summary(line_length=100)
 <h3> Get an image for test </h3>
 
 
-```
+```python
 plt.imshow(x_test[0].reshape(28,28).astype(np.float), cmap='gray');plt.axis("off");plt.show()
 ```
 
@@ -541,7 +541,7 @@ plt.imshow(x_test[0].reshape(28,28).astype(np.float), cmap='gray');plt.axis("off
 <h3> At last, Let's see whether the final prediction is correct!? </h3>
 
 
-```
+```python
 # Create batch size 1
 tst = np.expand_dims(x_test[0], 0)
 
@@ -568,7 +568,7 @@ print("Predicted Label:", np.argmax(tail_pred))
 
 
 
-```
+```python
 head.save("head_model", save_format='tf')
 tail.save("tail_model", save_format='tf')
 ```
@@ -582,7 +582,7 @@ tail.save("tail_model", save_format='tf')
 <h3> Merging these two seperated models is too simple! </h3>
 
 
-```
+```python
 merged_model = keras.Sequential([head, tail], name="merged_model")
 merged_model.summary()
 
@@ -612,7 +612,7 @@ merged_model.summary()
 
 
 
-```
+```python
 
 # Design a VGG-like digit recognition model
 model = keras.Sequential(
