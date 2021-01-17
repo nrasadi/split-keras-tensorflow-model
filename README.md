@@ -1,7 +1,7 @@
 
 <h1> Example: Split a CNN Model into Two Parts </h1>
 
-To run this example, [Google Colab](https://colab.research.google.com) is a recommended choice.
+For running this example, [Google Colab](https://colab.research.google.com) is the recommended choice.
 
 First of all, Clone!
 
@@ -23,7 +23,7 @@ First of all, Clone!
 # Check if Colab is using gpu. 
 # If not, Runtime tab -> Change runtime type -> Hardware Accelarator (GPU)
 gpu_name = !nvidia-smi -L
-print("GPU name: ", gpu_name[0]) if if len(gpu_name) >= 1 else print("No GPU!")
+print("GPU name: ", gpu_name[0]) if len(gpu_name) >= 1 else print("No GPU!")
 ```
 
     GPU name:  GPU 0: Tesla P100-PCIE-16GB (UUID: GPU-0875064e-f48e-ff55-29b6-019dd05b5f02)
