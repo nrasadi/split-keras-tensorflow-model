@@ -1,9 +1,18 @@
 
-<h1> Example: Split a CNN Model into Two Parts </h1>
+# What is it?
+
+This repository helps you to split a Keras model having Tensorflow backends into two or more submodels.   
+It is particularly useful when you have resource constraints so that you are unable to perform inference on the whole model using only one compute node (e.g., an edge device). In such a situation, you can break the model down into several smaller models, and load each of them to one edge device.   
+However, there can be a lot of other applications for this purpose. If you know, I would love to get have your examples here.
+
+
+In the following I have provided a thorough example of how it works and how you can achieve your goal. :v:
+    
+# Example: Split a CNN Model into Two Parts
 
 For running this example, [Google Colab](https://colab.research.google.com) is the recommended choice.
 
-First of all, Clone!
+First of all, let's Clone!
 
 
 ```bash
@@ -53,7 +62,7 @@ os.chdir("/content/split-keras-tensorflow-model")
 import splitter
 ```
 
-<h2> Load MNIST Dataset </h2>
+## Load MNIST Dataset
 
 It contains:
 *   60000 train samples
@@ -93,7 +102,7 @@ y_test = keras.utils.to_categorical(y_test, num_classes)
     10000 test samples
 
 
-<h2> Visualize Dataset </h2>
+## Visualize Dataset
 
 
 
@@ -115,16 +124,16 @@ plt.show()
 ![png](split_model_example_files/split_model_example_9_0.png)
 
 
-<h2> Design Model Architecture of Digit Recognizer </h2>
+## Design Model Architecture of the Digit Recognizer
 
-<h3> Quantize the model </h3>
+### Quantize the model
 
 *   At first, I reduced the precision of weights and activations used in neural network to make the training process <b>faster</b>. 
 *   It may introduce accuracy instability on real models, however. Therefore, it is better to use float32 or [tensorflow mixed precision policy](https://www.tensorflow.org/guide/keras/mixed_precision) instead!
 
-<h3> Apply augmentation </h3>
+### Apply augmentation
  
-To prevent <b>overfitting</b> and boost the accuracy of the model, I used a few -very simple- augmentation techniques before feeding images to the DNN.
+To prevent **overfitting** and boost the accuracy of the model, I used a few -very simple- augmentation techniques before feeding images to the DNN.
 
 *   All the following techniques are stochastic with the degree determined by 'factor'.
 *   dropout: simulates noise or pixel drop.
@@ -132,7 +141,7 @@ To prevent <b>overfitting</b> and boost the accuracy of the model, I used a few 
 *   translation, rotation: translates and rotates images.
 *   contrast: modifies contrast of images.
 
-<h3> Model architecture design </h3>
+### Model architecture design
 
 I designed a ResNet-like architecture, but pretty much simpler and with way too less parameters.
 
@@ -147,7 +156,7 @@ It consists of 4 blocks:
 * 20% dropout is applied on all conv blocks after batch normalization.
 * 50% dropout is applied just before the last dense layer (output).
 
-<h3> Model construction </h3>
+### Model construction
 
 I used *RMSProp* as the optimzer and *categorical cross entropy* as the loss function.
 
@@ -311,7 +320,7 @@ model.compile(loss="categorical_crossentropy", optimizer="RMSProp", metrics=["ac
     __________________________________________________________________________________________________
 
 
-<h2> Plot Graphical Visualization of the Network Architecture </h2>
+## Plot Graphical Visualization of the Network Architecture
 
 
 ```python
@@ -329,7 +338,7 @@ plot_model(model, rankdir='LR', dpi=600)
 
 
 
-<h2> Train the Network </h2>
+## Train the Network
 
 * Change batch size and number of epochs to fit best with the resources you have.
 
@@ -366,7 +375,7 @@ model.fit(x_train, y_train, batch_size=batch_size, epochs=epochs, validation_spl
     211/211 [==============================] - 3s 16ms/step - loss: 0.0770 - accuracy: 0.9912 - val_loss: 0.0471 - val_accuracy: 0.9868
 
 
-<h2> Model Evaluation </h2>
+## Model Evaluation
 
 Evaluate the model on the test set to see how good the network has been trained.
 
@@ -387,7 +396,7 @@ print("Test accuracy: {:.2f}%".format(score[1]*100))
     Test accuracy: 99.22%
 
 
-<h2> Split The Network </h2>
+## Split The Network
 
 After all, we want to split the network from a point called <b> split point </b>.
 In the *Model architecture design* section, I named a specific layer (the second Add layer) as <b>'split'</b>. I want to split the model from that point now. Of course, you can choose a different point. It's on you!
@@ -418,7 +427,7 @@ head, tail = splitter.split_network(model=model,
 
 
 
-<h3> Let's see how these head and tail models are </h3>
+### Let's see how these head and tail models are
 
 
 ```python
@@ -521,11 +530,11 @@ _ = head.summary(line_length=100), tail.summary(line_length=100)
     ____________________________________________________________________________________________________
 
 
-<h2> Do Inference Using Two Models Jointly</h2>
+## Do Inference Using Two Models Jointly
 
 
 
-<h3> Get an image for test </h3>
+### Get an image for test
 
 
 ```python
@@ -536,9 +545,9 @@ plt.imshow(x_test[0].reshape(28,28).astype(np.float), cmap='gray');plt.axis("off
 ![png](split_model_example_files/split_model_example_24_0.png)
 
 
-<h3> Firstly, feed image to the <b>head</b> model. Then feed the output prediction of the head into the <b>tail</b> model.
+#### Firstly, feed image to the <b>head</b> model. Then feed the output prediction of the head into the <b>tail</b> model.
 
-<h3> At last, Let's see whether the final prediction is correct!? </h3>
+#### At last, Let's see whether the final prediction is correct!?
 
 
 ```python
@@ -564,7 +573,7 @@ print("Predicted Label:", np.argmax(tail_pred))
 
 <h1 dir='rtl' align='center'>YUP :D</h1>
 
-<h3> Save splitted models </h3>
+### Save the splitted models
 
 
 
@@ -577,9 +586,9 @@ tail.save("tail_model", save_format='tf')
     INFO:tensorflow:Assets written to: tail_model/assets
 
 
-<h2> Merge Head and Tail <h2>
+## Merge Head and Tail
 
-<h3> Merging these two seperated models is too simple! </h3>
+### Merging these two seperated models is too simple!
 
 
 ```python
@@ -602,7 +611,7 @@ merged_model.summary()
     _________________________________________________________________
 
 
-<h2> Practice: </h2>
+## Practice: 
 
 
 
@@ -647,8 +656,10 @@ model = keras.Sequential(
 
 ```
 
-<h1> END! </h1>
+# The END!
 
-Any kind of contribution is appreciated.
+
+# Any kind of contribution is appreciated.
+### If you can provide with more examples, better explanation, etc., make a PR. :clinking_glasses:
 
 Github: [github.com/nrasadi/split-keras-tensorflow-model](https://github.com/nrasadi/split-keras-tensorflow-model)
