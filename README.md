@@ -3,7 +3,7 @@
 
 This repository helps you to split a Keras model having Tensorflow backends into two or more submodels.   
 It is particularly useful when you have resource constraints so that you are unable to perform inference on the whole model using only one compute node (e.g., an edge device). In such a situation, you can break the model down into several smaller models, and load each of them to one edge device.   
-However, there can be a lot of other applications for this purpose. If you know, I would love to get have your examples here.
+However, there can be a lot of other applications for this purpose. If you know more, this repo is open to everybody, and I would love to have your thoughts here.
 
 
 In the following I have provided a thorough example of how it works and how you can achieve your goal. :v:
